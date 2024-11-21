@@ -1,7 +1,7 @@
 package com.argus.api.domain;
 
 public enum TipoDoUsuario {
-    ADM,
+    ADMIN,
     SINDICO,
     SUBSINDICO,
     MORADOR
