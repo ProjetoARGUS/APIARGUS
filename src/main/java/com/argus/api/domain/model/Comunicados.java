@@ -1,6 +1,5 @@
 package com.argus.api.domain.model;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +14,8 @@ public class Comunicados {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String titulo; 
 
     private String mensagem;
 

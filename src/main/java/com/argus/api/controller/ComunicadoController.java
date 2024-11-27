@@ -24,7 +24,6 @@ public class ComunicadoController {
             ComunicadoDTO comunicadoCriado = comunicadoService.enviarComunicado(comunicadoDTO);
             return new ResponseEntity<>(comunicadoCriado, HttpStatus.CREATED);
         } catch (RuntimeException e) {
-
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -39,7 +38,7 @@ public class ComunicadoController {
     public ResponseEntity<ComunicadoDTO> atualizarComunicado(@PathVariable Long id, @RequestBody ComunicadoDTO comunicadoDTO) {
         try {
 
-            ComunicadoDTO comunicadoAtualizado = comunicadoService.atualizarComunicado(id, comunicadoDTO.mensagem());
+        	ComunicadoDTO comunicadoAtualizado = comunicadoService.atualizarComunicado(id, comunicadoDTO.mensagem(), comunicadoDTO.titulo());
             return new ResponseEntity<>(comunicadoAtualizado, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -54,13 +53,10 @@ public class ComunicadoController {
             Map<String, String> response = new HashMap<>();
             response.put("mensagem", "Comunicado excluído com sucesso.");
             return new ResponseEntity<>(response, HttpStatus.OK);
-
         } catch (RuntimeException e) {
-
             Map<String, String> response = new HashMap<>();
             response.put("erro", "Comunicado não encontrado.");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
 }
-
