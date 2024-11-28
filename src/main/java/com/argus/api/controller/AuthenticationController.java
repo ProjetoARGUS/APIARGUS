@@ -2,7 +2,9 @@ package com.argus.api.controller;
 
 import com.argus.api.domain.model.Usuarios;
 import com.argus.api.dto.AuthenticationDTO;
+import com.argus.api.dto.LoginResponseDTO;
 import com.argus.api.dto.UsuarioDTO;
+import com.argus.api.infra.security.TokenService;
 import com.argus.api.repository.UsuarioRepository;
 import com.argus.api.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -29,12 +31,17 @@ public class AuthenticationController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    TokenService tokenService;
+
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.cpf(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        return ResponseEntity.ok().build();
+        var token = tokenService.generateToken((Usuarios) auth.getPrincipal());
+
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping("/cadastro")
