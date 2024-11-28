@@ -7,6 +7,7 @@ import com.argus.api.exception.CondominioNotFoundException;
 import com.argus.api.repository.CondominioRepository;
 import com.argus.api.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,18 +23,29 @@ public class UsuarioService {
         @Autowired
         private CondominioRepository condominioRepository;
 
-        public Usuarios createUser(Usuarios usuarios) {
-            if (usuarios.getCondominio() != null && usuarios.getCondominio().getNome() != null) {
-                Condominio condominio = condominioRepository.findByNome(usuarios.getCondominio().getNome())
-                        .orElseThrow(() -> new CondominioNotFoundException("Condomínio não encontrado"));
-                usuarios.setCondominio(condominio);
-            }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-            return usuarioRepository.save(usuarios);
+    public UsuarioDTO createUser(Usuarios usuarios) {
+
+        String encryptedPassword = passwordEncoder.encode(usuarios.getSenha());
+        usuarios.setSenha(encryptedPassword);
+
+        if (usuarios.getCondominio() != null && usuarios.getCondominio().getNome() != null) {
+            Condominio condominio = condominioRepository.findByNome(usuarios.getCondominio().getNome())
+                    .orElseThrow(() -> new CondominioNotFoundException("Condomínio não encontrado"));
+            usuarios.setCondominio(condominio);
         }
 
+        Usuarios savedUser = usuarioRepository.save(usuarios);
 
-        public List<UsuarioDTO> getAllUsers() {
+
+        return convertToDTO(savedUser);
+    }
+
+
+
+    public List<UsuarioDTO> getAllUsers() {
             return usuarioRepository.findAll().stream()
                     .map(this::convertToDTO)
                     .collect(Collectors.toList());
