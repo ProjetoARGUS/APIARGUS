@@ -16,12 +16,6 @@ public class UsuariosController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @PostMapping("/cadastro")
-    public ResponseEntity<UsuarioDTO> createUser(@RequestBody Usuarios usuarios) {
-        Usuarios savedUser = usuarioService.createUser(usuarios);
-        UsuarioDTO usuarioDTO = usuarioService.convertToDTO(savedUser);
-        return ResponseEntity.ok(usuarioDTO);
-    }
 
     @GetMapping("/listar")
     public ResponseEntity<List<UsuarioDTO>> getUsers() {
