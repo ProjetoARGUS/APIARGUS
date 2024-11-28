@@ -1,7 +1,6 @@
 package com.argus.api.domain.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,25 +15,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "reservas")
+@Table(name = "voto")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Reservas {
+public class Voto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private Boolean voto;
+
     @ManyToOne
-    @JoinColumn(name = "areas_comuns_id", nullable = false)
-    private AreasComuns areasComuns;
+    @JoinColumn(name = "sessao_votacao_id", nullable = false)
+    private SessaoVotacao sessaoVotacao;
 
-    @Column(nullable = false)
-    private LocalDate dataReserva;  
-
-    @Column(nullable = false)
-    private LocalTime horaInicio;  
-
-    @Column(nullable = false)
-    private LocalTime horaFim;  
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    @JsonIgnore 
+    private Usuarios usuarios;
 }
+

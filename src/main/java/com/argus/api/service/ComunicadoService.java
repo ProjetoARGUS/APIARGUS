@@ -25,22 +25,19 @@ public class ComunicadoService {
     @Autowired
     private CondominioRepository condominioRepository;
 
-
     public ComunicadoDTO enviarComunicado(ComunicadoDTO comunicadoDTO) {
 
         Usuarios usuario = usuarioRepository.findById(1L)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
 
-
         Condominio condominio = condominioRepository.findByNome(comunicadoDTO.condominioNome())
                 .orElseThrow(() -> new RuntimeException("Condomínio não encontrado."));
 
-
         Comunicados comunicado = new Comunicados();
         comunicado.setMensagem(comunicadoDTO.mensagem());
+        comunicado.setTitulo(comunicadoDTO.titulo());  
         comunicado.setCondominio(condominio);
         comunicado.setUsuarios(usuario);
-
 
         Comunicados salvo = comunicadoRepository.save(comunicado);
 
@@ -55,22 +52,18 @@ public class ComunicadoService {
                 .collect(Collectors.toList());
     }
 
-    public ComunicadoDTO atualizarComunicado(Long id, String novaMensagem) {
+    public ComunicadoDTO atualizarComunicado(Long id, String novaMensagem, String novoTitulo) {
 
         Comunicados comunicado = comunicadoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Comunicado não encontrado."));
 
-
         comunicado.setMensagem(novaMensagem);
-
+        comunicado.setTitulo(novoTitulo);  
 
         Comunicados comunicadoAtualizado = comunicadoRepository.save(comunicado);
 
-
         return converterParaDTO(comunicadoAtualizado);
     }
-
-
 
     public void excluirComunicado(Long id) {
         Comunicados comunicado = comunicadoRepository.findById(id)
@@ -83,9 +76,8 @@ public class ComunicadoService {
         return new ComunicadoDTO(
                 comunicado.getId(),
                 comunicado.getCondominio().getNome(),
+                comunicado.getTitulo(),  
                 comunicado.getMensagem()
         );
-
     }
 }
-

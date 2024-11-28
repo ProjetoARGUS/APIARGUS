@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,13 +31,17 @@ public class ReservasService {
             throw new RuntimeException("No momento não está disponível");
         }
 
-        if (reservasRepository.findByAreasComunsAndDataReserva(areasComuns, reservasDTO.dataReserva()).isPresent()) {
-            throw new RuntimeException("Área já reservada para essa data.");
+        // Verifica se a área já foi reservada para a data e hora especificada
+        if (reservasRepository.findByAreasComunsAndDataReservaAndHoraInicioBetween(
+                areasComuns, reservasDTO.dataReserva(), reservasDTO.horaInicio(), reservasDTO.horaFim()).isPresent()) {
+            throw new RuntimeException("Área já reservada para essa data e horário.");
         }
 
         Reservas reservas = new Reservas();
         reservas.setAreasComuns(areasComuns);
         reservas.setDataReserva(reservasDTO.dataReserva());
+        reservas.setHoraInicio(reservasDTO.horaInicio());
+        reservas.setHoraFim(reservasDTO.horaFim());
 
         reservasRepository.save(reservas);
 
@@ -44,15 +49,15 @@ public class ReservasService {
     }
 
     public List<ReservasDTO> listarTodasReservas() {
-
         List<Reservas> reservas = reservasRepository.findAll();
-
 
         return reservas.stream()
                 .map(reserva -> new ReservasDTO(
                         reserva.getId(),
                         reserva.getAreasComuns().getNome(),
-                        reserva.getDataReserva()))
+                        reserva.getDataReserva(),
+                        reserva.getHoraInicio(),
+                        reserva.getHoraFim()))
                 .collect(Collectors.toList());
     }
 
@@ -65,17 +70,20 @@ public class ReservasService {
 
         String mensagem = "A reserva da área " + reserva.getAreasComuns().getNome() +
                 " para a data " + reserva.getDataReserva().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) +
+                " das " + reserva.getHoraInicio().format(DateTimeFormatter.ofPattern("HH:mm")) +
+                " até " + reserva.getHoraFim().format(DateTimeFormatter.ofPattern("HH:mm")) +
                 " foi deletada com sucesso.";
 
         return mensagem;
     }
 
-
     private ReservasDTO convertToDTO(Reservas reservas) {
         return new ReservasDTO(
                 reservas.getId(),
                 reservas.getAreasComuns().getNome(),
-                reservas.getDataReserva()
+                reservas.getDataReserva(),
+                reservas.getHoraInicio(),
+                reservas.getHoraFim()
         );
     }
 }
