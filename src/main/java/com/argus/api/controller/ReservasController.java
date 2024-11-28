@@ -16,7 +16,7 @@ public class ReservasController {
     @Autowired
     private ReservasService reservasService;
 
-    @PostMapping("/reservar")
+    @PostMapping
     public ResponseEntity<?> reservarArea(@RequestBody ReservasDTO reservasDTO) {
         try {
             ReservasDTO reserva = reservasService.reservarArea(reservasDTO);
@@ -26,14 +26,13 @@ public class ReservasController {
         }
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public ResponseEntity<List<ReservasDTO>> listarTodasReservas() {
-
         List<ReservasDTO> reservas = reservasService.listarTodasReservas();
         return new ResponseEntity<>(reservas, HttpStatus.OK);
     }
 
-    @DeleteMapping("/excluir/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<String> excluirReserva(@PathVariable Long id) {
         try {
             String resposta = reservasService.excluirReserva(id);
