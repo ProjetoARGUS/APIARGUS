@@ -2,10 +2,12 @@ package com.argus.api.service;
 
 import com.argus.api.domain.model.Comunicados;
 import com.argus.api.domain.model.Condominio;
+import com.argus.api.domain.model.Notificacoes;
 import com.argus.api.domain.model.Usuarios;
 import com.argus.api.dto.ComunicadoDTO;
 import com.argus.api.repository.ComunicadoRepository;
 import com.argus.api.repository.CondominioRepository;
+import com.argus.api.repository.NotificacaoRepository;
 import com.argus.api.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,9 @@ public class ComunicadoService {
 
     @Autowired
     private CondominioRepository condominioRepository;
+    
+    @Autowired
+    private NotificacoesService notificacoesService;
 
     public ComunicadoDTO enviarComunicado(ComunicadoDTO comunicadoDTO) {
 
@@ -40,8 +45,12 @@ public class ComunicadoService {
         comunicado.setUsuarios(usuario);
 
         Comunicados salvo = comunicadoRepository.save(comunicado);
+        
+        notificacoesService.criarNotificacaoComunicado(salvo);
 
-        return converterParaDTO(salvo);
+
+        
+         return converterParaDTO(salvo);
     }
 
     public List<ComunicadoDTO> listarComunicados() {
