@@ -32,7 +32,7 @@ public class ReservasController {
         return new ResponseEntity<>(reservas, HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> excluirReserva(@PathVariable Long id) {
         try {
             String resposta = reservasService.excluirReserva(id);

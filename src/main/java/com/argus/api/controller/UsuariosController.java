@@ -17,7 +17,7 @@ public class UsuariosController {
     private UsuarioService usuarioService;
 
 
-    @GetMapping("/listar")
+    @GetMapping
     public ResponseEntity<List<UsuarioDTO>> getUsers() {
         List<UsuarioDTO> usuarios = usuarioService.getAllUsers();
         return ResponseEntity.ok(usuarios);
@@ -30,14 +30,14 @@ public class UsuariosController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PutMapping("atualizar/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<UsuarioDTO> updateUser(@PathVariable Long id, @RequestBody Usuarios usuarios) throws Exception {
         Usuarios updatedUser = usuarioService.updateUser(id, usuarios);
         UsuarioDTO usuarioDTO = usuarioService.convertToDTO(updatedUser);
         return ResponseEntity.ok(usuarioDTO);
     }
 
-    @DeleteMapping("/deletar/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) throws Exception {
         UsuarioDTO deletedUser = usuarioService.deleteUser(id);
         String responseMessage = deletedUser.nome() + " Foi Deletado Com Sucesso!";
