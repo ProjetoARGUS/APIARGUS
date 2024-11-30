@@ -19,19 +19,19 @@ public class SessaoVotacaoController {
         this.sessaoVotacaoService = sessaoVotacaoService;
     }
 
-    @PostMapping("/criar")
+    @PostMapping
     public ResponseEntity<SessaoVotacaoDTO> criarSessaoVotacao(@Valid @RequestBody SessaoVotacaoDTO sessaoVotacaoDTO) {
         SessaoVotacaoDTO resposta = sessaoVotacaoService.criarSessao(sessaoVotacaoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public ResponseEntity<List<SessaoVotacaoDTO>> listarTodasSessoes() {
         List<SessaoVotacaoDTO> sessoes = sessaoVotacaoService.listarTodasSessoes();
         return ResponseEntity.ok(sessoes);
     }
 
-    @DeleteMapping("/deletar/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deletarSessaoVotacao(@PathVariable Long id) {
         sessaoVotacaoService.deletarSessao(id);
         String mensagem = "Sessão de votação foi deletada com sucesso.";

@@ -15,13 +15,13 @@ public class CondominioController {
     @Autowired
     private CondominioService condominioService;
 
-    @PostMapping("/criar")
+    @PostMapping
     public ResponseEntity<String> createCondominio(@RequestBody CondominioDTO condominioDTO) {
         condominioService.createCondominio(condominioDTO);
         return ResponseEntity.ok(condominioDTO.nome() + " criado com sucesso!");
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public List<Condominio> getAllCondominios() {
         return condominioService.getAllCondominios();
     }

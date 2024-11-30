@@ -26,25 +26,25 @@ public class AreasComunsController {
     @Autowired
     private AreasComunsService areasComunsService;
 
-    @PostMapping("/cadastrar")
+    @PostMapping
     public ResponseEntity<AreasComunsDTO> cadastrarAreaComum(@RequestBody AreasComunsDTO areaComumDTO) {
         AreasComunsDTO areaCadastrada = areasComunsService.cadastrarAreaComum(areaComumDTO);
         return new ResponseEntity<>(areaCadastrada, HttpStatus.CREATED);
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public ResponseEntity<List<AreasComunsDTO>> listarTodasAsAreasComuns() {
         List<AreasComunsDTO> areasComuns = areasComunsService.listarTodasAsAreasComuns();
         return ResponseEntity.ok(areasComuns);
     }
 
-    @PutMapping("/atualizar/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<AreasComunsDTO> atualizarAreaComum(@PathVariable Long id, @RequestBody AreasComunsDTO areasComunsDTO) {
         AreasComunsDTO areaAtualizada = areasComunsService.atualizarAreaComum(id, areasComunsDTO);
         return ResponseEntity.ok(areaAtualizada);
     }
 
-    @DeleteMapping("/excluir/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> excluirAreaComum(@PathVariable Long id) {
         return areasComunsService.excluirAreaComum(id);
     }

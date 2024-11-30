@@ -18,7 +18,7 @@ public class ComunicadoController {
     @Autowired
     private ComunicadoService comunicadoService;
 
-    @PostMapping("/enviar")
+    @PostMapping
     public ResponseEntity<?> enviarComunicado(@RequestBody ComunicadoDTO comunicadoDTO) {
         try {
             ComunicadoDTO comunicadoCriado = comunicadoService.enviarComunicado(comunicadoDTO);
@@ -28,13 +28,13 @@ public class ComunicadoController {
         }
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public ResponseEntity<List<ComunicadoDTO>> listarComunicados() {
         List<ComunicadoDTO> comunicados = comunicadoService.listarComunicados();
         return ResponseEntity.ok(comunicados);
     }
 
-    @PutMapping("/atualizar/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ComunicadoDTO> atualizarComunicado(@PathVariable Long id, @RequestBody ComunicadoDTO comunicadoDTO) {
         try {
 
@@ -45,7 +45,7 @@ public class ComunicadoController {
         }
     }
 
-    @DeleteMapping("/excluir/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> excluirComunicado(@PathVariable Long id) {
         try {
             comunicadoService.excluirComunicado(id);

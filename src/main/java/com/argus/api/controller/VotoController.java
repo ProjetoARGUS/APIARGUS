@@ -29,7 +29,7 @@ public class VotoController {
     }
 
     // Endpoint para listar todos os votos de uma sessão de votação
-    @GetMapping("/sessao/{sessaoVotacaoId}")
+    @GetMapping("/{Id}")
     public ResponseEntity<List<Voto>> listarVotos(@PathVariable Long sessaoVotacaoId) {
         // Chama o serviço para listar os votos de uma sessão específica
         List<Voto> votos = votoService.listarVotos(sessaoVotacaoId);
@@ -45,7 +45,7 @@ public class VotoController {
     }
 
     // Endpoint para deletar um voto pelo ID
-    @DeleteMapping("/{votoId}")
+    @DeleteMapping("/{Id}")
     public ResponseEntity<String> deletarVoto(@PathVariable Long votoId) {
         // Chama o serviço para deletar o voto
         String resposta = votoService.deletarVoto(votoId);
