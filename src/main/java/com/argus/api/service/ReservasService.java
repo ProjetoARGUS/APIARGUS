@@ -1,17 +1,17 @@
 package com.argus.api.service;
 
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.argus.api.domain.model.AreasComuns;
 import com.argus.api.domain.model.Reservas;
 import com.argus.api.dto.ReservasDTO;
 import com.argus.api.repository.AreasComunsRepository;
 import com.argus.api.repository.ReservasRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ReservasService {
@@ -21,6 +21,9 @@ public class ReservasService {
 
     @Autowired
     AreasComunsRepository areasComunsRepository;
+    
+    @Autowired
+    private NotificacoesService notificacoesService;
 
     public ReservasDTO reservarArea(ReservasDTO reservasDTO) {
 
@@ -31,7 +34,6 @@ public class ReservasService {
             throw new RuntimeException("No momento não está disponível");
         }
 
-        // Verifica se a área já foi reservada para a data e hora especificada
         if (reservasRepository.findByAreasComunsAndDataReservaAndHoraInicioBetween(
                 areasComuns, reservasDTO.dataReserva(), reservasDTO.horaInicio(), reservasDTO.horaFim()).isPresent()) {
             throw new RuntimeException("Área já reservada para essa data e horário.");
@@ -44,6 +46,9 @@ public class ReservasService {
         reservas.setHoraFim(reservasDTO.horaFim());
 
         reservasRepository.save(reservas);
+        
+        notificacoesService.criarNotificacaoReserva(reservas);
+
 
         return convertToDTO(reservas);
     }
