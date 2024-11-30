@@ -29,13 +29,40 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/cadastro").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
-                        .requestMatchers(HttpMethod.POST, "/condominio/criar").hasRole("ADMIN")
+                        // <-- CONDOMINIO -- > //
+                        .requestMatchers(HttpMethod.POST, "/condominio").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "condominio/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/condominio/listar").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/condominio").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/condominio/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/condominio/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "comunicado/enviar").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        // <-- USUARIOS -- > //
+                        .requestMatchers(HttpMethod.GET, "/usuarios").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        .requestMatchers(HttpMethod.GET, "/usuarios/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        .requestMatchers(HttpMethod.PUT, "/usuarios/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        .requestMatchers(HttpMethod.DELETE, "/usuarios/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        // <-- COMUNICADO -- > //
+                        .requestMatchers(HttpMethod.POST, "comunicado").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        .requestMatchers(HttpMethod.PUT, "comunicado/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
                         .requestMatchers(HttpMethod.DELETE, "/comunicado/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        // <-- AREAS COMUNS -- > //
+                        .requestMatchers(HttpMethod.POST, "/areasComuns").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        .requestMatchers(HttpMethod.PUT, "/areasComuns/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        .requestMatchers(HttpMethod.DELETE, "/areasComuns/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        // <-- SESSAO VOTACAO -- > //
+                        .requestMatchers(HttpMethod.POST, "/sessaoVotacao").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        .requestMatchers(HttpMethod.DELETE, "/sessaoVotacao/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        // <-- VOTOS -- > //
+                        .requestMatchers(HttpMethod.GET, "/votos").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        .requestMatchers(HttpMethod.GET, "/votos/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        .requestMatchers(HttpMethod.DELETE, "/votos/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        // <-- OCORRENCIAS -- > //
+                        .requestMatchers(HttpMethod.POST, "/ocorrencias").hasRole("MORADOR")
+                        .requestMatchers(HttpMethod.GET, "/ocorrencias").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        .requestMatchers(HttpMethod.GET, "/ocorrencias/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        .requestMatchers(HttpMethod.PUT, "/ocorrencias/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        .requestMatchers(HttpMethod.DELETE, "/ocorrencias/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        // <-- RESERVAS  -- > //
+                        .requestMatchers(HttpMethod.DELETE, "/reservas/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

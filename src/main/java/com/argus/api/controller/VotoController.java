@@ -28,7 +28,7 @@ public class VotoController {
         return ResponseEntity.ok(resposta);
     }
 
-    // Endpoint para listar todos os votos de uma sessão de votação
+    // Endpoint para listar um voto pelo seu id
     @GetMapping("/{Id}")
     public ResponseEntity<List<Voto>> listarVotos(@PathVariable Long sessaoVotacaoId) {
         // Chama o serviço para listar os votos de uma sessão específica
