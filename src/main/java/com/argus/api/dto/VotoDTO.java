@@ -1,12 +1,12 @@
 package com.argus.api.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record VotoDTO(
-        @NotBlank(message = "O ID da sessão é obrigatório.")
+        @NotNull(message = "O ID da sessão é obrigatório.")
         Long sessaoId,
 
-        @NotBlank(message = "O voto é obrigatório.")
+        @NotNull(message = "O voto é obrigatório.")
         Boolean voto
 ) {}
 
