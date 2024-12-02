@@ -2,6 +2,7 @@ package com.argus.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
@@ -14,16 +15,14 @@ public record SessaoVotacaoDTO(
         @NotBlank(message = "A descrição é obrigatória.")
         String descricao,
 
-        @NotBlank(message = "A data de início é obrigatória.")
+        @NotNull(message = "A data de início é obrigatória.")
         @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate dataInicio,
 
-        @NotBlank(message = "A data de fim é obrigatória.")
+        @NotNull(message = "A data de fim é obrigatória.")
         @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate dataFim,
 
         @NotBlank(message = "O nome do condomínio é obrigatório.")
         String condominioNome
 ) {}
-
-
