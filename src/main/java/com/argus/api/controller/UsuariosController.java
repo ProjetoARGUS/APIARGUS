@@ -30,6 +30,13 @@ public class UsuariosController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+    @GetMapping("/cpf/{cpf}")
+    public ResponseEntity<UsuarioDTO> findUserByCpf(@PathVariable String cpf) {
+        return usuarioService.findUserByCpf(cpf)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioDTO> updateUser(@PathVariable Long id, @RequestBody Usuarios usuarios) throws Exception {
         Usuarios updatedUser = usuarioService.updateUser(id, usuarios);

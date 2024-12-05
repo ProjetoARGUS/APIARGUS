@@ -31,7 +31,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/auth/cadastro").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
                         // <-- CONDOMINIO -- > //
                         .requestMatchers(HttpMethod.POST, "/condominio").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "condominio/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/condominio/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/condominio").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/condominio/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/condominio/{id}").hasRole("ADMIN")
@@ -41,8 +41,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.PUT, "/usuarios/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
                         .requestMatchers(HttpMethod.DELETE, "/usuarios/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
                         // <-- COMUNICADO -- > //
-                        .requestMatchers(HttpMethod.POST, "comunicado").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
-                        .requestMatchers(HttpMethod.PUT, "comunicado/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        .requestMatchers(HttpMethod.POST, "/comunicado").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
+                        .requestMatchers(HttpMethod.PUT, "/comunicado/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
                         .requestMatchers(HttpMethod.DELETE, "/comunicado/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
                         // <-- AREAS COMUNS -- > //
                         .requestMatchers(HttpMethod.POST, "/areasComuns").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
