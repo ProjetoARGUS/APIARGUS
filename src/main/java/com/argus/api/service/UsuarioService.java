@@ -44,18 +44,23 @@ public class UsuarioService {
     }
 
 
-
     public List<UsuarioDTO> getAllUsers() {
             return usuarioRepository.findAll().stream()
                     .map(this::convertToDTO)
                     .collect(Collectors.toList());
-        }
+    }
 
         public Optional<UsuarioDTO> findUserById(Long id) {
-            return usuarioRepository.findById(id).map(this::convertToDTO);
+            return usuarioRepository.findById(id).map((this::convertToDTO));
         }
 
-        public Usuarios updateUser(Long id, Usuarios usuarios) throws Exception {
+    public Optional<UsuarioDTO> findUserByCpf(String cpf) {
+        return usuarioRepository.findUsuarioByCpf(cpf)
+                .map(this::convertToDTO);
+    }
+
+
+    public Usuarios updateUser(Long id, Usuarios usuarios) throws Exception {
             Usuarios existingUser = usuarioRepository.findById(id)
                     .orElseThrow(() -> new Exception("Usuário não encontrado"));
 
