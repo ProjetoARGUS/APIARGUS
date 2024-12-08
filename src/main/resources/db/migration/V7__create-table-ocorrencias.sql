@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS `ocorrencias` (
   `status_aprovacao` ENUM('APROVADO', 'REJEITADO', 'AGUARDANDO') DEFAULT 'AGUARDANDO',
   `status_resolucao` ENUM('PENDENTE', 'EM_ANDAMENTO', 'CONCLUIDA') NOT NULL DEFAULT 'PENDENTE',
   `data_criacao` DATETIME NOT NULL,
+  `feedback` TEXT NULL,
   `id_usuario` BIGINT NOT NULL,
   `id_area` BIGINT,
   FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
