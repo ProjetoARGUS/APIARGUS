@@ -26,6 +26,7 @@ public class OcorrenciasService {
         ocorrencia.setDescricao(ocorrenciaDTO.getDescricao());
         ocorrencia.setTipo(ocorrenciaDTO.getTipo());
         ocorrencia.setDataCriacao(LocalDateTime.now());
+        ocorrencia.setFeedback(ocorrenciaDTO.getFeedback());
 
         Usuarios usuario = usuarioRepository.findById(ocorrenciaDTO.getIdUsuario())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
@@ -57,6 +58,7 @@ public class OcorrenciasService {
         ocorrenciaExistente.setTipo(ocorrenciaDTO.getTipo());
         ocorrenciaExistente.setStatusAprovacao(ocorrenciaDTO.getStatusAprovacao());
         ocorrenciaExistente.setStatusResolucao(ocorrenciaDTO.getStatusResolucao());
+        ocorrenciaExistente.setFeedback(ocorrenciaDTO.getFeedback());
 
         Ocorrencias atualizada = ocorrenciasRepository.save(ocorrenciaExistente);
         return converterParaDTO(atualizada);
@@ -78,6 +80,7 @@ public class OcorrenciasService {
         dto.setDataCriacao(ocorrencia.getDataCriacao());
         dto.setIdUsuario(ocorrencia.getUsuario().getId());
         dto.setIdArea(ocorrencia.getArea() != null ? ocorrencia.getArea().getId() : null);
+        dto.setFeedback(ocorrencia.getFeedback());
         return dto;
     }
 }

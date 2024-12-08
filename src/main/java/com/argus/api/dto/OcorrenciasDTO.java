@@ -15,4 +15,5 @@ public class OcorrenciasDTO {
     private LocalDateTime dataCriacao;
     private Long idUsuario;
     private Long idArea;
+    private String feedback;
 }

@@ -45,6 +45,9 @@ public class Ocorrencias {
     @JoinColumn(name = "id_area")
     private AreasComuns area;
 
+    @Column(name = "feedback")
+    private String feedback;
+
     public enum TipoOcorrencia {
         PROBLEMA_DE_INFRAESTRUTURA,
         DESENTENDIMENTO,
