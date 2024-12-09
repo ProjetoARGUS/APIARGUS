@@ -30,6 +30,12 @@ public class SessaoVotacaoController {
         List<SessaoVotacaoDTO> sessoes = sessaoVotacaoService.listarTodasSessoes();
         return ResponseEntity.ok(sessoes);
     }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<SessaoVotacaoDTO> buscarSessaoPorId(@PathVariable Long id) {
+        SessaoVotacaoDTO sessao = sessaoVotacaoService.buscarSessaoPorId(id);
+        return ResponseEntity.ok(sessao);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletarSessaoVotacao(@PathVariable Long id) {
