@@ -42,7 +42,7 @@ public class Usuarios implements UserDetails {
     private TipoDoUsuario tipoDoUsuario;
 
     @Column(nullable = true)
-    private Character bloco;
+    private String bloco;
 
     @Column(nullable = true)
     private Integer apartamento;
