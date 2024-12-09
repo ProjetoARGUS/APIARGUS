@@ -25,39 +25,40 @@ public class SessaoVotacaoService {
     }
 
     public SessaoVotacaoDTO criarSessao(SessaoVotacaoDTO sessaoVotacaoDTO) {
-        // Buscar o condomínio pelo nome
         Optional<Condominio> condominioOptional = condominioRepository.findByNome(sessaoVotacaoDTO.condominioNome());
 
-        // Se o condomínio não existir, você pode lançar uma exceção ou criar um novo condomínio
         Condominio condominio;
         if (condominioOptional.isPresent()) {
             condominio = condominioOptional.get();
         } else {
             condominio = new Condominio();
             condominio.setNome(sessaoVotacaoDTO.condominioNome());
-            condominio = condominioRepository.save(condominio);  // Persistir o novo condomínio
+            condominio = condominioRepository.save(condominio);  
         }
 
-        // Criar a sessão de votação
-        SessaoVotacao sessaoVotacao = new SessaoVotacao();
+                SessaoVotacao sessaoVotacao = new SessaoVotacao();
         sessaoVotacao.setProposta(sessaoVotacaoDTO.proposta());
         sessaoVotacao.setDescricao(sessaoVotacaoDTO.descricao());
         sessaoVotacao.setDataInicio(sessaoVotacaoDTO.dataInicio());
         sessaoVotacao.setDataFim(sessaoVotacaoDTO.dataFim());
         sessaoVotacao.setCondominio(condominio);
 
-        // Salvar a sessão de votação
         SessaoVotacao sessaoSalva = sessaoVotacaoRepository.save(sessaoVotacao);
 
-        // Retornar o DTO da SessaoVotacao salva utilizando o método auxiliar
         return convertToDTO(sessaoSalva);
     }
 
     public List<SessaoVotacaoDTO> listarTodasSessoes() {
         List<SessaoVotacao> sessoes = sessaoVotacaoRepository.findAll();
         return sessoes.stream()
-                .map(this::convertToDTO) // Método auxiliar para conversão
+                .map(this::convertToDTO) 
                 .collect(Collectors.toList());
+    }
+    
+    public SessaoVotacaoDTO buscarSessaoPorId(Long id) {
+        SessaoVotacao sessaoVotacao = sessaoVotacaoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Sessão de votação não encontrada com ID: " + id));
+        return convertToDTO(sessaoVotacao);
     }
 
     public void deletarSessao(Long id) {
@@ -66,7 +67,6 @@ public class SessaoVotacaoService {
         sessaoVotacaoRepository.delete(sessao);
     }
 
-    // Método auxiliar para converter SessaoVotacao para SessaoVotacaoDTO
     private SessaoVotacaoDTO convertToDTO(SessaoVotacao sessaoVotacao) {
         return new SessaoVotacaoDTO(
                 sessaoVotacao.getId(),
