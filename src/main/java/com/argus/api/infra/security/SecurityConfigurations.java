@@ -49,7 +49,6 @@ public class SecurityConfigurations {
                         // <-- USUARIOS -- > //
                         .requestMatchers(HttpMethod.GET, "/usuarios").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
                         .requestMatchers(HttpMethod.GET, "/usuarios/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
-                        .requestMatchers(HttpMethod.PUT, "/usuarios/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
                         .requestMatchers(HttpMethod.DELETE, "/usuarios/{id}").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")
                         // <-- COMUNICADO -- > //
                         .requestMatchers(HttpMethod.POST, "/comunicado").hasAnyRole("ADMIN", "SINDICO", "SUBSINDICO")

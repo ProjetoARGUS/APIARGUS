@@ -72,6 +72,11 @@ public class UsuarioService {
             existingUser.setBloco(usuarios.getBloco());
             existingUser.setApartamento(usuarios.getApartamento());
 
+            if (usuarios.getSenha() != null && !usuarios.getSenha().isEmpty()) {
+                String encryptedPassword = passwordEncoder.encode(usuarios.getSenha());
+                existingUser.setSenha(encryptedPassword);
+            }
+
             if (usuarios.getCondominio() != null && usuarios.getCondominio().getNome() != null) {
                 Condominio condominio = condominioRepository.findByNome(usuarios.getCondominio().getNome())
                         .orElseThrow(() -> new CondominioNotFoundException("Condomínio não encontrado"));
