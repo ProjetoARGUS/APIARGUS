@@ -5,7 +5,7 @@ public record UsuarioDTO(
         String nome,
         String telefone,
         String tipoDoUsuario,
-        Character bloco,
+        String bloco,
         Integer apartamento,
         String condominioNome,
         String condominioEndereco
